@@ -1,0 +1,43 @@
+# Ignorer les fichiers et dossiers spécifiques à l'éditeur
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Ignorer les fichiers de configuration environnementale
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignorer les fichiers de logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorer les modules Node.js
+node_modules/
+
+# Ignorer les fichiers de build
+dist/
+build/
+out/
+
+# Ignorer les fichiers temporaires
+*.tmp
+*.swp
+.DS_Store
+
+# Ignorer les fichiers générés par le système
+Thumbs.db
+.Thumbs.db
+ehthumbs.db
+.ehthumbs.db
+
+# Ignorer les fichiers de dépendances Python (si applicable)
+__pycache__/
+*.py[cod]
+venv/

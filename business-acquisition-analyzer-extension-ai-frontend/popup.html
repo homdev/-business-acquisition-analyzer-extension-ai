@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Business Acquisition Analyzer</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <script src="libs/chart.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Analyze Business</h1>
+    <button id="analyzeBtn">Analyze</button>
+    <div id="result">
+      <img id="placeholder-image" src="images/Business_analysis_graph_bw.png" alt="Placeholder" style="display: block;">
+      <canvas id="scoreChart" width="400" height="400" style="display: none;"></canvas>
+      <div id="explanation"></div>
+    </div>
+    <h2>Historique des analyses</h2>
+    <div id="history"></div>
+    <h2>Comparaison des entreprises</h2>
+    <div id="comparison"></div>
+    <h2>Évolution dans le temps</h2>
+    <div id="evolution"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

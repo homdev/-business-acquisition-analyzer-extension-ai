@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Business Acquisition Analyzer",
+  "version": "1.0",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.transentreprise.com/*", "https://www.cessionpme.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "48": "icon.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["libs/chart.min.js", "images/Business_analysis_graph_bw.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
