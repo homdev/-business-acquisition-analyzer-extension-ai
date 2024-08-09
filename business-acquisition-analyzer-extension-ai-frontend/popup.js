@@ -1,16 +1,27 @@
 document.getElementById('analyzeBtn').addEventListener('click', async () => {
+  const progressBar = document.getElementById('progress-bar');
+  const progressBarFill = document.querySelector('.progress-bar-fill');
+
+  // Afficher la barre de progression
+  progressBar.style.display = 'block';
+  progressBarFill.style.width = '0%';
+  progressBarFill.style.transition = 'width 0.5s ease-in-out';
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
     function: analyzePage,
   }, async (result) => {
+    // Mise à jour de la progression
+    progressBarFill.style.width = '50%';
+
     const data = result[0]?.result;
     console.log("Données extraites de la page:", data);
 
     if (!data || !data.title || !data.location || !data.price || !data.revenue || !data.employees || !data.description) {
       console.error("Erreur : Données extraites invalides ou incomplètes");
       document.getElementById('result').innerText = 'Erreur lors de l\'extraction des données de la page. Certaines données sont manquantes.';
+      progressBar.style.display = 'none'; // Cacher la barre de progression en cas d'erreur
       return;
     }
 
@@ -26,6 +37,9 @@ document.getElementById('analyzeBtn').addEventListener('click', async () => {
         },
         body: JSON.stringify(data)
       });
+
+       // Mise à jour de la progression
+       progressBarFill.style.width = '75%';
 
       console.log('Réponse reçue du serveur:', response);
 
@@ -49,7 +63,6 @@ document.getElementById('analyzeBtn').addEventListener('click', async () => {
 
         document.getElementById('explanation').innerHTML = `
           <p><strong>Note du potentiel commercial : ${resultData.score}/100</strong></p>
-          <p><strong>Explication :</strong></p>
           <p>${sanitizeExplanation(resultData.explanation)}</p>
         `;
 
@@ -60,6 +73,11 @@ document.getElementById('analyzeBtn').addEventListener('click', async () => {
     } catch (error) {
       console.error('Erreur:', error);
       document.getElementById('result').innerText = 'Erreur lors de l\'analyse de l\'entreprise: ' + error.message;
+    } finally {
+      // Cacher la barre de progression après un court délai
+      setTimeout(() => {
+        progressBar.style.display = 'none';
+      }, 500);
     }
   });
 });
@@ -173,16 +191,19 @@ document.addEventListener('DOMContentLoaded', function() {
       const scoreColor = getScoreColor(analysis.score);
       const analysisDiv = document.createElement('div');
       analysisDiv.innerHTML = `
-        <button class="accordion" style="background-color: ${scoreColor}; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border: 1px solid ${scoreColor};">Analyse ${index + 1}: <b>${analysis.title}</b> </button>
+        <button class="accordion" style="background-color: ${scoreColor}; box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin: 2px; border: 1px solid ${scoreColor};">Analyse ${index + 1}: <b>${analysis.title}</b> </button>
         <div class="panel">
+        <div class="company">
           <p><strong>Titre :</strong> ${analysis.title}</p>
           <p><strong>Localisation :</strong> ${analysis.location}</p>
           <p><strong>Prix :</strong> ${analysis.price}</p>
           <p><strong>Chiffre d'affaires :</strong> ${analysis.revenue}</p>
           <p><strong>Employés :</strong> ${analysis.employees}</p>
           <p><strong>Description :</strong> ${analysis.description}</p>
+        </div>
+        <hr>
           <p><strong>Note du potentiel commercial :</strong> ${analysis.score}/100</p>
-          <p><strong>Explication :</strong></p>
+          <hr>
           <p>${sanitizeExplanation(analysis.explanation)}</p>
         </div>
       `;

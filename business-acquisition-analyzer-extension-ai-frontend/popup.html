@@ -9,8 +9,11 @@
   <div class="container">
     <h1>Analyze Business</h1>
     <button id="analyzeBtn">Analyze</button>
+    <div id="progress-bar" class="progress-bar" style="display: none;">
+      <div class="progress-bar-fill"></div>
+    </div>    
     <div id="result">
-      <img id="placeholder-image" src="images/Business_analysis_graph_bw.png" alt="Placeholder" style="display: block;">
+      <img id="placeholder-image" src="images/placeholder.png" alt="Placeholder" style="display: block; width: 80px;">
       <canvas id="scoreChart" width="400" height="400" style="display: none;"></canvas>
       <div id="explanation"></div>
     </div>
@@ -18,8 +21,8 @@
     <div id="history"></div>
     <h2>Comparaison des entreprises</h2>
     <div id="comparison"></div>
-    <h2>Évolution dans le temps</h2>
-    <div id="evolution"></div>
+    <!-- <h2>Évolution dans le temps</h2>
+    <div id="evolution"></div> -->
   </div>
   <script src="popup.js"></script>
 </body>
